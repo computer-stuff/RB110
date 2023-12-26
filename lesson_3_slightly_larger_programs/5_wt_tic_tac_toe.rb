@@ -159,6 +159,11 @@ def computer_places_piece!(board)
     end
   end
 
+  if board[5] == INITIAL_MARKER
+    board[5] = COMPUTER_MARKER
+    return
+  end
+
   square = empty_squares(board).sample
   board[square] = COMPUTER_MARKER
 end
