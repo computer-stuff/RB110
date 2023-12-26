@@ -57,13 +57,22 @@ end
 
 def empty_squares(board)
   board.keys.select { |num| board[num] == INITIAL_MARKER }
-  # binding.pry
+end
+
+def joinor(arr, delimiter, final_delimiter)
+  # For every item in the arr[0..-2]
+    # join with delimiter
+  # and join last item with final_delimiter
+  return [
+    arr[0..-2].join(delimiter),
+    arr[-1],
+  ].join(final_delimiter)
 end
 
 def player_places_piece!(board)
   square = ''
   loop do
-    prompt "Choose a square (#{empty_squares(board).join(', ')}):"
+    prompt "Choose a square (#{joinor(empty_squares(board), ', ', ' or ')}):"
     square = gets.chomp.to_i
     break if empty_squares(board).include?(square)
     prompt "Sorry, that's not a valid choice."
