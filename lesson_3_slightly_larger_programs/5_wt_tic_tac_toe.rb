@@ -72,6 +72,8 @@ def empty_squares(board)
 end
 
 def joinor(arr, delimiter, final_delimiter)
+  return arr[0] if arr.size == 1
+
   # For every item in the arr[0..-2]
     # join with delimiter
   # and join last item with final_delimiter
