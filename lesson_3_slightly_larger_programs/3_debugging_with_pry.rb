@@ -5,14 +5,23 @@ def double_num(num)
   num + 2
 end
 
-def double_evens(arr)
-  arr.map do |num|
-    binding.pry
-    new_num = num.even? ? double_num(num) : num 
-  end
-end
+# Re-written code so that `step` works. 
+# def double_evens(arr)
+#   arr.map do |num|
+#     is_even = num.even?
+#     binding.pry
+#     new_num = is_even ? double_num(num) : num 
+#   end
+# end
 
-p double_evens([1, 2, 3, 4, 5]) == [1, 4, 3, 8, 5]
+# def double_evens(arr)
+#   arr.map do |num|
+#     binding.pry
+#     new_num = num.even? ? double_num(num) : num 
+#   end
+# end
+
+# p double_evens([1, 2, 3, 4, 5]) == [1, 4, 3, 8, 5]
 
 
 
@@ -101,3 +110,47 @@ only odd numbers that are less than or equal to 15 or multiples of 3
 # end
 
 # p arr
+
+
+
+
+=begin
+Given this data structure write some code to return an array containing 
+the colors of the fruits, and the sizes of the vegetables. 
+The sizes should be uppercase and the colors should be capitalized.
+
+hsh = {
+  'grape' => {type: 'fruit', colors: ['red', 'green'], size: 'small'},
+  'carrot' => {type: 'vegetable', colors: ['orange'], size: 'medium'},
+  'apple' => {type: 'fruit', colors: ['red', 'green'], size: 'medium'},
+  'apricot' => {type: 'fruit', colors: ['orange'], size: 'medium'},
+  'marrow' => {type: 'vegetable', colors: ['green'], size: 'large'},
+}
+
+The return value should look like this:
+[["Red", "Green"], "MEDIUM", ["Red", "Green"], ["Orange"], "LARGE"]
+
+
+P:
+given a hash of fruits/veg their colors and sizes return an array contianing 
+the colors of the fruit capitalized and the sizes uppercased 
+
+
+=end
+
+hsh.map do |k, v|
+  
+
+end 
+
+
+
+
+hsh = {
+  'grape' => {type: 'fruit', colors: ['red', 'green'], size: 'small'},
+  'carrot' => {type: 'vegetable', colors: ['orange'], size: 'medium'},
+  'apple' => {type: 'fruit', colors: ['red', 'green'], size: 'medium'},
+  'apricot' => {type: 'fruit', colors: ['orange'], size: 'medium'},
+  'marrow' => {type: 'vegetable', colors: ['green'], size: 'large'},
+}
+size_color(hsh)

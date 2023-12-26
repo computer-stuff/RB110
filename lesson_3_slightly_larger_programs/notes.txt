@@ -1,0 +1,118 @@
+nina              5434   0.0  0.0 408554432   6976   ??  S     7:58PM   0:00.03 /usr/libexec/SidecarRelay
+root              5423   0.0  0.0 408182112   2544   ??  Ss    7:58PM   0:00.03 /usr/libexec/keybagd -t 15
+nina              5326   0.0  0.1 408235632  10192   ??  S     7:57PM   0:00.08 /System/Library/PrivateFrameworks/AMPLibrary.framework/Versions/A/Support/AMPArtworkAgent --launchd
+root              5300   0.0  0.0 408229680   5328   ??  Ss    7:57PM   0:00.07 /System/Library/Frameworks/SystemExtensions.framework/Versions/A/Helpers/sysextd
+nina@MacBook-Air-4 lesson_3_slightly_larger_programs % htop
+nina@MacBook-Air-4 lesson_3_slightly_larger_programs % ps aux | grep ruby    
+
+
+
+
+# 3.times do
+puts "I'm about to start a new program!"
+15.times do |i| # --> 0
+  puts "#{15 - i}"
+  sleep 1
+end
+# system "ruby 7_assignment_ttt_bonus_features.rb"
+
+puts "I'm going to sleep for 10 seconds now - bye! 👋"
+sleep 10
+puts "now I end"
+# end
+
+# system "pwd"
+
+# def system(command)
+#   # open a bash shell
+#   # type into the shell, "command"
+#   # return the value
+# end
+
+
+
+
+
+# initialzes every value in the hash to intial marker and iterates through 1..9
+def initialize_board
+  new_board = []
+  # (1..9).each do |num| 
+  #   new_board[num] = INITIAL_MARKER # new_board[1] = ' ', new_board[2] = ' ', etc. 
+  # end 
+
+  new_board[1] = INITIAL_MARKER
+  new_board[4] = INITIAL_MARKER
+  # {
+  #   1 => INITIAL_MARKER,
+  #   4 => INITIAL_MARKER
+  # }
+  #### reset!
+  new_board = []
+  new_board[1] = INITIAL_MARKER
+  new_board[4] = INITIAL_MARKER
+  # [INITIAL_MARKER, nil, nil, INITIAL_MARKER]
+
+  # (1..9).each do |num| 
+  #   new_board[num] = INITIAL_MARKER # new_board[1] = ' ', new_board[2] = ' ', etc. 
+  # end 
+  
+  new_board
+end
+
+def initialize_board
+  new_board = { # filing cabinet
+    # key => value 
+    1 => INITIAL_MARKER,
+    2 => INITIAL_MARKER,
+    3 => INITIAL_MARKER,
+    4 => INITIAL_MARKER,
+    5 => INITIAL_MARKER,
+    6 => INITIAL_MARKER,
+    7 => INITIAL_MARKER,
+    8 => INITIAL_MARKER,
+    9 => INITIAL_MARKER,
+  }
+
+  new_board
+end
+
+HOW TO NAVIGATE AROUND USING ARROW KEYS AND CMD DON'T USE MOUSE!!!!!!!!
+
+USE ARROW KEYS FOR LEFT AND RIGHT 
+USE CMD -> TO JUMP ALL THE WAY RIGHT ON A LINE 
+USE CMD <- TO JUMP ALL THE WAY LEFT ON A LINE 
+USE CMD UP ARROW KEY TO GO ALL THE WAY TO THE TOP OF THE FILE 
+USE CMD DOWN ARROW KEY TO GO ALL THE WAY TO THE BOTTOM OF THE FILE
+USE OPTION <- TO MOVE UNIT BY UNIT TO THE LEFT 
+USE OPTION -> TO MOVE UNIT BY UNIT TO THE RIGHT 
+USE OPTION UP ARROW KEY TO MOVE LINE YOU ARE ON UP 
+USE OPTION DOWN ARROW KEY TO MOVE LINE YOU ARE ON DOWN 
+CMD + W CLOSES THE TAB IM OPEN ON 
+
+ESC to exit out of find command 
+
+To make copy of window you are on:
+CMD+K UP ARROW 
+CMD+K DOWN ARROW 
+CMD+K RIGHT ARROW 
+CMD+K LEFT ARROW 
+
+For definition search 
+CMD+SHIFT+B 
+
+TO MOVE AROUND IN WINDOWS:
+CMD+SHIFT+K UP ARROW 
+CMD+SHIFT+K DOWN ARROW
+CMD+SHIFT+K LEFT ARROW
+CMD+SHIFT+K RIGHT ARROW 
+
+If I close a window:
+CMD+SHIFT T
+
+
+
+CMD SHIFT P - FOR PREFERENCES 
+OPEN SETTING 
+SCROLL BEYOND 
+CLICK OR UNCLICK SCROLL BEYOND THE LAST LINE 
+
