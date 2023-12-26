@@ -86,26 +86,15 @@ end
 
 def detect_winner(board)
   WINNING_LINES.each do |line|
-    # line ==> [1, 2, 3]
-    # if board.values_at(*line).count(PLAYER_MARKER) == 3
-    # if board.values_at(line[0], line[1], line[....]).count(PLAYER_MARKER) == 3
-    # if board.values_at(line[0], line[1], line[....]).count('X') == 3
-    # if board.values_at(1, 2, 3).count('X') == 3
-    # if {....}.values_at(1, 2, 3).count('X') == 3
-    # if [nil, 'O', X].count('X') == 3
-    # if 1 == 3
-    # if false
     if board.values_at(*line).count(PLAYER_MARKER) == 3
       return 'Player'
     elsif board.values_at(*line).count(COMPUTER_MARKER) == 3
       return 'Computer'
     end
   end
+
   nil
 end
-
-player_score = 0
-computer_score = 0
 
 loop do
   board = initialize_board
@@ -131,30 +120,9 @@ loop do
     prompt "It's a tie!"
   end
 
-  if detect_winner(board) == 'Player'
-    player_score += 1
-  elsif detect_winner(board) == 'Computer'
-    computer_score += 1
-  else
-    nil
-  end
-
-  puts "Player's Score = #{player_score}"
-  puts "Computer's Score = #{computer_score}"
-
-
-  if player_score == 5
-    puts "Match over Player won 5 rounds!"
-  elsif computer_score == 5
-    puts "Match over Computer won 5 rouns!"
-  else
-    nil
-  end
-
   prompt "Play again? (y or n)"
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
-
 end
 
 
