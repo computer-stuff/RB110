@@ -57,6 +57,24 @@ def initialize_board
   new_board = {}
   (1..9).each { |num| new_board[num] = INITIAL_MARKER }
 
+  # For testing winning/defensive scenarios
+  #   X  |  X  |  O
+  # -----+-----+-----
+  #      |  X  |
+  # -----+-----+-----
+  #      |  O  |  O
+  # new_board = {
+  #   1 => PLAYER_MARKER,
+  #   2 => PLAYER_MARKER,
+  #   3 => COMPUTER_MARKER,
+  #   4 => INITIAL_MARKER,
+  #   5 => PLAYER_MARKER,
+  #   6 => INITIAL_MARKER,
+  #   7 => INITIAL_MARKER,
+  #   8 => COMPUTER_MARKER,
+  #   9 => COMPUTER_MARKER,
+  # }
+
   new_board
 end
 
@@ -95,10 +113,12 @@ def player_places_piece!(board)
 end
 
 def line_at_risk?(board, line, opponent_marker)
+  puts "board.values_at(*line).count(opponent_marker): #{board.values_at(*line).count(opponent_marker)} != 2"
   if board.values_at(*line).count(opponent_marker) != 2
     return false
   end
 
+  puts "board.values_at(*line).count(INITIAL_MARKER): #{board.values_at(*line).count(INITIAL_MARKER)} != 1"
   if board.values_at(*line).count(INITIAL_MARKER) != 1
     return false
   end
@@ -121,16 +141,17 @@ def computer_places_piece!(board)
   # board.values_at(*line) --> give me the values at each of these spots on the board
   # board.values_at(*line).index(INITIAL_MARKER) --> give me the index, in the line, of the empty spot in this list of values
   # line[board.values_at(*line).index(INITIAL_MARKER)] --> give me the key of the empty spot on the board
-
   WINNING_LINES.each do |line|
-    if line_at_risk?(board, line, PLAYER_MARKER)
+    if line_at_risk?(board, line, COMPUTER_MARKER)
       index_of_at_risk_line = board.values_at(*line).index(INITIAL_MARKER)
       index_to_place_marker_at = line[index_of_at_risk_line]
       board[index_to_place_marker_at] = COMPUTER_MARKER
       return
     end
+  end
 
-    if line_at_risk?(board, line, COMPUTER_MARKER)
+  WINNING_LINES.each do |line|
+    if line_at_risk?(board, line, PLAYER_MARKER)
       index_of_at_risk_line = board.values_at(*line).index(INITIAL_MARKER)
       index_to_place_marker_at = line[index_of_at_risk_line]
       board[index_to_place_marker_at] = COMPUTER_MARKER
