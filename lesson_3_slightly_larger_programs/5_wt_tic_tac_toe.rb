@@ -51,10 +51,12 @@ def display_board(board)
   puts "     |     |"
   puts ""
 end
+
 # rubocop:enable Metrics/AbcSize
 def initialize_board
   new_board = {}
   (1..9).each { |num| new_board[num] = INITIAL_MARKER }
+
   new_board
 end
 
@@ -104,6 +106,7 @@ end
 
 def computer_places_piece!(board)
   # if at risk, play defensively
+  # if about to win, play winning move
   # else, random
   #
   # func at risk:
@@ -116,8 +119,16 @@ def computer_places_piece!(board)
   # board.values_at(*line) --> give me the values at each of these spots on the board
   # board.values_at(*line).index(INITIAL_MARKER) --> give me the index, in the line, of the empty spot in this list of values
   # line[board.values_at(*line).index(INITIAL_MARKER)] --> give me the key of the empty spot on the board
+
   WINNING_LINES.each do |line|
     if line_at_risk?(board, line, PLAYER_MARKER)
+      index_of_at_risk_line = board.values_at(*line).index(INITIAL_MARKER)
+      index_to_place_marker_at = line[index_of_at_risk_line]
+      board[index_to_place_marker_at] = COMPUTER_MARKER
+      return
+    end
+
+    if line_at_risk?(board, line, COMPUTER_MARKER)
       index_of_at_risk_line = board.values_at(*line).index(INITIAL_MARKER)
       index_to_place_marker_at = line[index_of_at_risk_line]
       board[index_to_place_marker_at] = COMPUTER_MARKER
