@@ -113,12 +113,10 @@ def player_places_piece!(board)
 end
 
 def line_at_risk?(board, line, opponent_marker)
-  puts "board.values_at(*line).count(opponent_marker): #{board.values_at(*line).count(opponent_marker)} != 2"
   if board.values_at(*line).count(opponent_marker) != 2
     return false
   end
 
-  puts "board.values_at(*line).count(INITIAL_MARKER): #{board.values_at(*line).count(INITIAL_MARKER)} != 1"
   if board.values_at(*line).count(INITIAL_MARKER) != 1
     return false
   end
@@ -192,17 +190,29 @@ end
 loop do
   scores = initialize_scores
 
+  prompt "Would you like to go first? (y or n)"
+  answer = gets.chomp
+
+  player_goes_first = answer.downcase.start_with?('y')
   loop do
     board = initialize_board
 
     loop do
-      display_board(board)
+      if player_goes_first
+        display_board(board)
+        player_places_piece!(board)
+        break if board_full?(board) || someone_won?(board)
 
-      player_places_piece!(board)
-      break if board_full?(board) || someone_won?(board)
+        computer_places_piece!(board)
+        break if board_full?(board) || someone_won?(board)
+      else
+        computer_places_piece!(board)
+        break if board_full?(board) || someone_won?(board)
 
-      computer_places_piece!(board)
-      break if board_full?(board) || someone_won?(board)
+        display_board(board)
+        player_places_piece!(board)
+        break if board_full?(board) || someone_won?(board)
+      end
     end
 
     display_board(board)
@@ -213,16 +223,16 @@ loop do
     if someone_won?(board)
       winner = detect_winner(board)
       scores[winner] += 1
-      prompt "#{winner} won this round!"
+      puts "#{winner} won this round!"
     else
-      prompt "It's a tie!"
+      puts "It's a tie!"
     end
 
-    prompt "####################"
-    prompt "## Current scores ##"
-    prompt "####################"
+    puts "####################"
+    puts "## Current scores ##"
+    puts "####################"
     scores.each do |player_name, current_score|
-      prompt "#{player_name}: #{current_score}"
+      puts "#{player_name}: #{current_score}"
     end
 
     break if scores.values.include?(ROUNDS_LIMIT)
