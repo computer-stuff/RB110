@@ -25,6 +25,9 @@ WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
+PLAYER_NAME = 'Player'
+COMPUTER_NAME = 'Computer'
+ROUNDS_LIMIT = 5
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -33,7 +36,7 @@ end
 # rubocop:disable Metrics/AbcSize
 def display_board(board)
   system 'clear'
-  puts "You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}."
+  puts "You're #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}."
   puts ""
   puts "     |     |"
   puts "  #{board[1]}  |  #{board[2]}  |  #{board[3]}"
@@ -53,6 +56,13 @@ def initialize_board
   new_board = {}
   (1..9).each { |num| new_board[num] = INITIAL_MARKER }
   new_board
+end
+
+def initialize_scores
+  return {
+    PLAYER_NAME => 0,
+    COMPUTER_NAME => 0,
+  }
 end
 
 def empty_squares(board)
@@ -96,44 +106,71 @@ end
 def detect_winner(board)
   WINNING_LINES.each do |line|
     if board.values_at(*line).count(PLAYER_MARKER) == 3
-      return 'Player'
+      return PLAYER_NAME
     elsif board.values_at(*line).count(COMPUTER_MARKER) == 3
-      return 'Computer'
+      return COMPUTER_NAME
     end
   end
 
   nil
 end
 
+
 loop do
-  board = initialize_board
+  scores = initialize_scores
 
   loop do
+    board = initialize_board
+
+    loop do
+      display_board(board)
+
+      player_places_piece!(board)
+      break if board_full?(board) || someone_won?(board)
+
+      computer_places_piece!(board)
+      break if board_full?(board) || someone_won?(board)
+    end
+
     display_board(board)
 
-    player_places_piece!(board)
-    break if board_full?(board) || someone_won?(board)
+    # tell them the score so far we also tell them who won that round or tell them if its a tie
+    # ask if they want to play another round or stop the game there play
 
-    computer_places_piece!(board)
-    break if board_full?(board) || someone_won?(board)
+    if someone_won?(board)
+      winner = detect_winner(board)
+      scores[winner] += 1
+      prompt "#{winner} won this round!"
+    else
+      prompt "It's a tie!"
+    end
+
+    prompt "####################"
+    prompt "## Current scores ##"
+    prompt "####################"
+    scores.each do |player_name, current_score|
+      prompt "#{player_name}: #{current_score}"
+    end
+
+    break if scores.values.include?(ROUNDS_LIMIT)
+
+    prompt "Play next game? (y or n)"
+    answer = gets.chomp
+
+    break unless answer.downcase.start_with?('y')
   end
 
-  display_board(board)
-
-  # tell them the score so far we also tell them who won that round or tell them if its a tie
-  # ask if they want to play another round or stop the game there play
-
-  if someone_won?(board)
-    prompt "#{detect_winner(board)} won this round!"
-  else
-    prompt "It's a tie!"
+  if scores.values.include?(ROUNDS_LIMIT)
+    overall_winner = scores.invert[ROUNDS_LIMIT]
+    prompt "#{overall_winner} won the set of matches!"
   end
 
-  prompt "Play again? (y or n)"
+  prompt "Play another round of #{ROUNDS_LIMIT}? (y or n)"
   answer = gets.chomp
+
+  # If break happens, loop exits and game ends
   break unless answer.downcase.start_with?('y')
 end
-
 
 
 prompt "Thanks for playing Tic Tac Toe! Goodbye!"
