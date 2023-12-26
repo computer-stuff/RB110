@@ -90,7 +90,41 @@ def player_places_piece!(board)
   board[square] = PLAYER_MARKER
 end
 
+def line_at_risk?(board, line, opponent_marker)
+  if board.values_at(*line).count(opponent_marker) != 2
+    return false
+  end
+
+  if board.values_at(*line).count(INITIAL_MARKER) != 1
+    return false
+  end
+
+  return true
+end
+
 def computer_places_piece!(board)
+  # if at risk, play defensively
+  # else, random
+  #
+  # func at risk:
+  #   for every winning line
+  #     if line has markers from opponent and 1 empty spot
+  #        pick empty spot
+
+  # line --> array of keys into the board hash
+  # board --> keys (spots on a board), values (marker in the spot)
+  # board.values_at(*line) --> give me the values at each of these spots on the board
+  # board.values_at(*line).index(INITIAL_MARKER) --> give me the index, in the line, of the empty spot in this list of values
+  # line[board.values_at(*line).index(INITIAL_MARKER)] --> give me the key of the empty spot on the board
+  WINNING_LINES.each do |line|
+    if line_at_risk?(board, line, PLAYER_MARKER)
+      index_of_at_risk_line = board.values_at(*line).index(INITIAL_MARKER)
+      index_to_place_marker_at = line[index_of_at_risk_line]
+      board[index_to_place_marker_at] = COMPUTER_MARKER
+      return
+    end
+  end
+
   square = empty_squares(board).sample
   board[square] = COMPUTER_MARKER
 end
